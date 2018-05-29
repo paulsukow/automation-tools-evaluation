@@ -1,7 +1,7 @@
-package geb-evaluation
+package geb
 
 class Config {
-   private static def CONFIG_LOCATION = 'geb-evaluation/Profiles.groovy'
+   private static def CONFIG_LOCATION = 'geb/Profiles.groovy'
 
    public static final def CONFIG = parseConfig().profiles[profile()]
 

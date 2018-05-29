@@ -1,6 +1,6 @@
-package geb-evaluation.tests
+package geb.tests
 
-import geb-evaluation.component.library.LandingPage
+import geb.component.library.LandingPage
 import geb.spock.GebReportingSpec
 import spock.lang.Stepwise
 

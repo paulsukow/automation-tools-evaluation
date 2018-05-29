@@ -1,7 +1,7 @@
-package geb-evaluation.component.library
+package geb.component.library
 
 import geb.Page
-import static geb-evaluation.Config.CONFIG
+import static geb.Config.CONFIG
 
 class LandingPage extends Page {
    static url = "http://${CONFIG.server}"
