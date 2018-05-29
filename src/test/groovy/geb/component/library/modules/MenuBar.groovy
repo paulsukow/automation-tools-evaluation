@@ -5,10 +5,12 @@ import geb.Module
 class MenuBar extends Module {
 
    static content = {
-      gamesMenuOption(wait: true) { $('li.hasdrop').$('a', text: iContains('games')) }
-      borderlands2SubMenuOption(wait: true) { $('li.hassubdrop').$('a', text: iContains('Borderlands 2')) }
+      mainMenuOption(wait: true) { option -> $('li.hasdrop').$('a', text: iContains("${option}")) }
+      subMenuOption(wait: true) { option -> $('li.hassubdrop').$('a', text: iContains("${option}")) }
 
-      buyNowMenuOption(wait: true) { $('li.hasdrop').$('a', text: iContains('buy now')) }
-      borderlands2SubMenuOption(wait: true) { $('li.hassubdrop').$('a', text: iContains('Borderlands 2')) }
+      gamesMenuOption(wait: true) { mainMenuOption('games') }
+      buyNowMenuOption(wait: true) { mainMenuOption('buy now') }
+
+      borderlands2SubMenuOption(wait: true) { subMenuOption('Borderlands 2') }
    }
 }
