@@ -10,6 +10,17 @@ import spock.lang.Stepwise
 @Stepwise
 class SampleBorderlandsUserJourney extends GebReportingSpec {
 
+/*
+   Sample user journey with Geb and the Borderlands video game website.
+   This user journey is summarized as the following:
+   You hear about the Borderlands 2 video game from a friend and decide to check it out.
+   You navigate to the borderlands website and verify your age.
+   From the home page, you navigate to the borderlands 2 game page where you can read about the game
+   and look at screen shots.
+   After looking at the game, you decide to buy the game for Mac from Best Buy.
+   The user journey ends when the Best Buy page opens
+ */
+
    private static final int WAIT_FOR_ANIMATION_TO_FINISH = 5000
 
    def "should be able to reach the borderlands website by completing the age verification"() {
