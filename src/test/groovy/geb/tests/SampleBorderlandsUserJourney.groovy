@@ -1,6 +1,7 @@
 package geb.tests
 
 import geb.component.library.AgeVerificationPage
+import geb.component.library.BorderlandsHomePage
 import geb.spock.GebReportingSpec
 
 class SampleBorderlandsUserJourney extends GebReportingSpec {
@@ -10,7 +11,16 @@ class SampleBorderlandsUserJourney extends GebReportingSpec {
       browser.go(AgeVerificationPage.url)
 
       then: "you are at the age verification page"
-      at AgeVerificationPage
+      AgeVerificationPage ageVerificationPage = browser.at(AgeVerificationPage)
 
+      when: "you enter a valid date of birth and click the submit button"
+      ageVerificationPage.birthMonth = 'Jan'
+      ageVerificationPage.birthDay = '01'
+      ageVerificationPage.birthYear = '1970'
+
+      ageVerificationPage.submitButton.click()
+
+      then: "you are redirected the the borderlands home page"
+      browser.at(BorderlandsHomePage)
    }
 }
