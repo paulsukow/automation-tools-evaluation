@@ -3,8 +3,8 @@ package geb.tests
 import geb.component.library.AgeVerificationPage
 import geb.component.library.Borderlands2GamePage
 import geb.component.library.BorderlandsHomePage
+import geb.component.library.BuyBorderlands2Page
 import geb.spock.GebReportingSpec
-import org.openqa.selenium.interactions.Actions
 import spock.lang.Stepwise
 
 @Stepwise
@@ -40,5 +40,19 @@ class SampleBorderlandsUserJourney extends GebReportingSpec {
 
       then: "you are redirected to the borderlands 2 game page"
       browser.at(Borderlands2GamePage)
+   }
+
+   def "should be able to reach the buy borderlands 2 page"() {
+      given: "you are at the borderlands 2 game page"
+      Borderlands2GamePage borderlands2GamePage = browser.at(Borderlands2GamePage)
+
+      when: "you click on the buy now button"
+      interact {
+         moveToElement(borderlands2GamePage.buyNowMenuOption)
+      }
+      borderlands2GamePage.borderlands2SubMenuOption.click()
+
+      then: "you are redirected to the buy borderlands 2 page"
+      BuyBorderlands2Page buyBorderlands2Page = browser.at(BuyBorderlands2Page)
    }
 }
