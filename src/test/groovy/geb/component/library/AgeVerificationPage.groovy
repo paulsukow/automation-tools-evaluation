@@ -9,7 +9,6 @@ class AgeVerificationPage extends Page {
    static at = { title == "Borderlands - Age Verification" }
 
    static content = {
-
       birthMonth(wait: true) { $('select', name: 'birthmonth:') }
       birthDay(wait: true) { $('select', name: 'birthday') }
       birthYear(wait: true) { $('select', name: 'birthyear') }
