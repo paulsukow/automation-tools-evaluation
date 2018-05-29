@@ -55,4 +55,22 @@ class SampleBorderlandsUserJourney extends GebReportingSpec {
       then: "you are redirected to the buy borderlands 2 page"
       BuyBorderlands2Page buyBorderlands2Page = browser.at(BuyBorderlands2Page)
    }
+
+   def "should be able to select platform and reach the best buy website to buy borderlands 2"() {
+      given: "you are at the buy borderlands 2 page"
+      BuyBorderlands2Page buyBorderlands2Page = browser.at(BuyBorderlands2Page)
+
+      when: "you choose mac as the platform"
+      buyBorderlands2Page.choosePlatformMenu.click()
+      buyBorderlands2Page.macOption.click()
+
+      and: "you chose best buy as the retailer"
+      buyBorderlands2Page.chooseRetailerMenu.click()
+      buyBorderlands2Page.bestBuyOption.click()
+
+      then: "a new tab opens to buy the game at best buy"
+      withWindow({title == 'Borderlands 2 - Mac - Best Buy'}) {
+        assert title == 'Borderlands 2 - Mac - Best Buy'
+      }
+   }
 }
