@@ -10,12 +10,19 @@ class BuyBorderlands2Page extends Page {
    static content = {
       menuBar { module MenuBar }
 
-      borderlands2Game(wait: true) { $('li[id="borderlands-2"]') }
+      borderlands2GameTile(wait: true) { $('li[id="borderlands-2"]') }
 
-      choosePlatformMenu(wait: true) { borderlands2Game.$('div.selectBox', text: iContains('Choose Platform')) }
-      macOption(wait: true) { $('ul.dropDown').$('li', text: iContains('Mac')) }
+      selectBoxMenu(wait: true) { menuName ->
+         borderlands2GameTile.$('div.selectBox', text: iContains("${menuName}"))
+      }
+      selectBoxItem(wait: true) { itemName ->
+         $('ul.dropDown').$('li', text: iContains("${itemName}"))
+      }
 
-      chooseRetailerMenu(wait: true) { borderlands2Game.$('div.selectBox', text: iContains('Choose Retailer')) }
-      bestBuyOption(wait: true) { $('ul.dropDown').$('li', text: iContains('Best Buy')) }
+      choosePlatformMenu { selectBoxMenu('Choose Platform') }
+      macOption { selectBoxItem('Mac') }
+
+      chooseRetailerMenu { selectBoxMenu('Choose Retailer') }
+      bestBuyOption { selectBoxItem('Best Buy') }
    }
 }
