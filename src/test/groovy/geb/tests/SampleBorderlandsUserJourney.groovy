@@ -34,9 +34,9 @@ class SampleBorderlandsUserJourney extends GebReportingSpec {
 
       when: "you select the borderlands 2 game from the games menu"
       interact {
-         moveToElement(borderlandsHomePage.gamesMenuOption)
+         moveToElement(borderlandsHomePage.menuBar.gamesMenuOption)
       }
-      borderlandsHomePage.borderlands2SubMenuOption.click()
+      borderlandsHomePage.menuBar.borderlands2SubMenuOption.click()
 
       then: "you are redirected to the borderlands 2 game page"
       browser.at(Borderlands2GamePage)
@@ -48,9 +48,9 @@ class SampleBorderlandsUserJourney extends GebReportingSpec {
 
       when: "you click on the buy now button"
       interact {
-         moveToElement(borderlands2GamePage.buyNowMenuOption)
+         moveToElement(borderlands2GamePage.menuBar.buyNowMenuOption)
       }
-      borderlands2GamePage.borderlands2SubMenuOption.click()
+      borderlands2GamePage.menuBar.borderlands2SubMenuOption.click()
 
       then: "you are redirected to the buy borderlands 2 page"
       BuyBorderlands2Page buyBorderlands2Page = browser.at(BuyBorderlands2Page)

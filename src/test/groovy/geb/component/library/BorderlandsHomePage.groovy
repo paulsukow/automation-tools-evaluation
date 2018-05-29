@@ -1,13 +1,13 @@
 package geb.component.library
 
 import geb.Page
+import geb.component.library.modules.MenuBar
 
 class BorderlandsHomePage extends Page {
 
    static at = { title == "Borderlands - Home Page" }
 
    static content = {
-      gamesMenuOption(wait: true) { $('li.hasdrop').$('a', text: iContains('games')) }
-      borderlands2SubMenuOption(wait: true) { $('li.hassubdrop').$('a', text: iContains('Borderlands 2')) }
+      menuBar { module MenuBar }
    }
 }
