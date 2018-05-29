@@ -24,11 +24,8 @@ class SampleBorderlandsUserJourneyWithGeb extends GebReportingSpec {
    private static final int WAIT_FOR_ANIMATION_TO_FINISH = 5000
 
    def "should be able to reach the borderlands website by completing the age verification"() {
-      when: "you go to the age verification page"
-      browser.go(AgeVerificationPage.url)
-
-      then: "you are at the age verification page"
-      AgeVerificationPage ageVerificationPage = browser.at(AgeVerificationPage)
+      given: "you are at the age verification page"
+      AgeVerificationPage ageVerificationPage = browser.to(AgeVerificationPage)
 
       when: "you enter a valid date of birth and click the submit button"
       ageVerificationPage.birthMonth = 'Jan'
@@ -76,7 +73,6 @@ class SampleBorderlandsUserJourneyWithGeb extends GebReportingSpec {
       when: "you choose mac as the platform"
       buyBorderlands2Page.choosePlatformMenu.click()
       buyBorderlands2Page.macOption.click()
-
       sleep(WAIT_FOR_ANIMATION_TO_FINISH)
 
       and: "you chose best buy as the retailer"
