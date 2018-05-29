@@ -8,9 +8,9 @@ class MenuBar extends Module {
       mainMenuOption(wait: true) { option -> $('li.hasdrop').$('a', text: iContains("${option}")) }
       subMenuOption(wait: true) { option -> $('li.hassubdrop').$('a', text: iContains("${option}")) }
 
-      gamesMenuOption(wait: true) { mainMenuOption('games') }
-      buyNowMenuOption(wait: true) { mainMenuOption('buy now') }
+      gamesMenuOption { mainMenuOption('games') }
+      buyNowMenuOption { mainMenuOption('buy now') }
 
-      borderlands2SubMenuOption(wait: true) { subMenuOption('Borderlands 2') }
+      borderlands2SubMenuOption { subMenuOption('Borderlands 2') }
    }
 }
