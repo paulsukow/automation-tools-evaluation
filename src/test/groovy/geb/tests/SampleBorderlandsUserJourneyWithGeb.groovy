@@ -8,7 +8,7 @@ import geb.spock.GebReportingSpec
 import spock.lang.Stepwise
 
 @Stepwise
-class SampleBorderlandsUserJourney extends GebReportingSpec {
+class SampleBorderlandsUserJourneyWithGeb extends GebReportingSpec {
 
 /*
    Sample user journey with Geb and the Borderlands video game website.
