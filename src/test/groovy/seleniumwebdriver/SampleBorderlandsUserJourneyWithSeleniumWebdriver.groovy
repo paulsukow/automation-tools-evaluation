@@ -71,6 +71,8 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       Actions actions = new Actions(driver)
       actions.moveToElement(gamesMenuOption).build().perform()
 
+      sleep(5000)
+
       WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
       borderlands2SubMenuOption.click()
 
@@ -83,9 +85,13 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
 //      given: "you are at the borderlands 2 game page"
 
       when: "you click on the buy now button"
+      sleep(5000)
+
       WebElement buyNowMenuOption = driver.findElement(By.cssSelector("li.hasdrop .buy-text"))
       Actions actions = new Actions(driver)
       actions.moveToElement(buyNowMenuOption).build().perform()
+
+      sleep(5000)
 
       WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
       borderlands2SubMenuOption.click()
@@ -95,15 +101,30 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       wait.until(ExpectedConditions.titleIs("Borderlands - Buy Borderlands 2"))
    }
 
-//   def "should be able to select platform and reach the best buy website to buy borderlands 2"() {
+   def "should be able to select platform and reach the best buy website to buy borderlands 2"() {
 //      given: "you are at the buy borderlands 2 page"
-//
-//      when: "you choose mac as the platform"
-//
-//      and: "you chose best buy as the retailer"
-//
-//      then: "a new tab opens to buy the game at best buy"
-//   }
+
+      when: "you choose mac as the platform"
+      WebElement choosePlatform = driver.findElement(By.cssSelector('#borderlands-2 #borderlands-2 div.platform'))
+      choosePlatform.click()
+
+
+      WebElement macOption = driver.findElement(By.cssSelector("[style='display: block;'] #mac"))
+      macOption.click()
+
+      and: "you chose best buy as the retailer"
+      sleep(5000)
+      WebElement chooseRetailer = driver.findElement(By.cssSelector(".retailer"))
+      chooseRetailer.click()
+
+      WebElement bestBuyOption = driver.findElement(By.xpath("//p[contains(text(), 'Best Buy')]"))
+      bestBuyOption.click()
+
+      then: "a new tab opens to buy the game at best buy"
+      driver.switchTo().window(driver.windowHandles.last())
+      WebDriverWait wait = new WebDriverWait(driver, 10)
+      wait.until(ExpectedConditions.titleIs('Borderlands 2 - Mac - Best Buy'))
+   }
 
    def cleanupSpec() {
       driver.quit()
