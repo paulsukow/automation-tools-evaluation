@@ -1,4 +1,4 @@
-package seleniumwebdriver
+package seleniumwebdriver.tests
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -6,8 +6,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
-import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
+import seleniumwebdriver.tests.component.library.AgeVerificationPage
 import spock.lang.Specification
 import spock.lang.Stepwise
 
@@ -40,23 +40,14 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       driver.get("https://borderlandsthegame.com")
 
       then: "you are redirected to the borderlands age verification page"
-      driver.title == "Borderlands - Age Verification"
+      AgeVerificationPage ageVerificationPage = new AgeVerificationPage(driver)
+      driver.title == ageVerificationPage.getPageTitle()
 
       when: "you enter a valid date of birth and click the submit button"
-      WebElement birthMonthElement = driver.findElement(By.name('birthmonth:'))
-      Select birthMonthComboBox = new Select(birthMonthElement)
-      birthMonthComboBox.selectByVisibleText('Jan')
-
-      WebElement birthDayElement = driver.findElement(By.name('birthday'))
-      Select birthDayComboBox = new Select(birthDayElement)
-      birthDayComboBox.selectByVisibleText('01')
-
-      WebElement birthYearElement = driver.findElement(By.name('birthyear'))
-      Select birthYearComboBox = new Select(birthYearElement)
-      birthYearComboBox.selectByVisibleText('1970')
-
-      WebElement submitButton = driver.findElement(By.name('Submit'))
-      submitButton.click()
+      ageVerificationPage.selectBirthMonth('Jan')
+      ageVerificationPage.selectBirthDay('01')
+      ageVerificationPage.selectBirthYear('1970')
+      ageVerificationPage.submit()
 
       then: "you are redirected to the borderlands home page"
       WebDriverWait wait = new WebDriverWait(driver, 10)
