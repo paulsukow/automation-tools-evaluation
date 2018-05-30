@@ -4,7 +4,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.support.ui.ExpectedCondition
+import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
@@ -27,9 +27,9 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
    The user journey ends when the Best Buy page opens
    */
 
-   WebDriver driver
+   private static WebDriver driver
 
-   def setup() {
+   def setupSpec() {
       driver = new ChromeDriver()
       driver.manage().timeouts().implicitlyWait(10, SECONDS)
    }
@@ -63,14 +63,22 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       wait.until(ExpectedConditions.titleIs("Borderlands - Home Page"))
    }
 
-//   def "should be able to navigate to the borderlands 2 game page"() {
+   def "should be able to navigate to the borderlands 2 game page"() {
 //      given: "you are at the borderlands home page"
-//
-//      when: "you select the borderlands 2 game from the games menu"
-//
-//      then: "you are redirected to the borderlands 2 game page"
-//   }
-//
+
+      when: "you select the borderlands 2 game from the games menu"
+      WebElement gamesMenuOption = driver.findElement(By.linkText("GAMES"))
+      Actions actions = new Actions(driver)
+      actions.moveToElement(gamesMenuOption).build().perform()
+
+      WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
+      borderlands2SubMenuOption.click()
+
+      then: "you are redirected to the borderlands 2 game page"
+      WebDriverWait wait = new WebDriverWait(driver, 10)
+      wait.until(ExpectedConditions.titleIs("Borderlands - Borderlands 2"))
+   }
+
 //   def "should be able to reach the buy borderlands 2 page"() {
 //      given: "you are at the borderlands 2 game page"
 //
@@ -89,7 +97,7 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
 //      then: "a new tab opens to buy the game at best buy"
 //   }
 
-   def cleanup() {
+   def cleanupSpec() {
       driver.quit()
    }
 }
