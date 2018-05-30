@@ -79,14 +79,22 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       wait.until(ExpectedConditions.titleIs("Borderlands - Borderlands 2"))
    }
 
-//   def "should be able to reach the buy borderlands 2 page"() {
+   def "should be able to reach the buy borderlands 2 page"() {
 //      given: "you are at the borderlands 2 game page"
-//
-//      when: "you click on the buy now button"
-//
-//      then: "you are redirected to the buy borderlands 2 page"
-//   }
-//
+
+      when: "you click on the buy now button"
+      WebElement buyNowMenuOption = driver.findElement(By.cssSelector("li.hasdrop .buy-text"))
+      Actions actions = new Actions(driver)
+      actions.moveToElement(buyNowMenuOption).build().perform()
+
+      WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
+      borderlands2SubMenuOption.click()
+
+      then: "you are redirected to the buy borderlands 2 page"
+      WebDriverWait wait = new WebDriverWait(driver, 10)
+      wait.until(ExpectedConditions.titleIs("Borderlands - Buy Borderlands 2"))
+   }
+
 //   def "should be able to select platform and reach the best buy website to buy borderlands 2"() {
 //      given: "you are at the buy borderlands 2 page"
 //
