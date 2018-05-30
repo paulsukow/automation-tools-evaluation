@@ -1,7 +1,13 @@
 package seleniumwebdriver
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.support.ui.ExpectedCondition
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.Select
+import org.openqa.selenium.support.ui.WebDriverWait
 import spock.lang.Specification
 import spock.lang.Stepwise
 
@@ -19,7 +25,7 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
    and look at screen shots.
    After looking at the game, you decide to buy the game for Mac from Best Buy.
    The user journey ends when the Best Buy page opens
- */
+   */
 
    WebDriver driver
 
@@ -28,22 +34,35 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       driver.manage().timeouts().implicitlyWait(10, SECONDS)
    }
 
-   def "test"() {
-      when:
-      driver.get('http://www.google.com')
+   def "should be able to reach the borderlands website by completing the age verification"() {
+//      given: "you are at the age verification page"
+      when: "you got to the borderlands website"
+      driver.get("https://borderlandsthegame.com")
 
-      then:
-      driver.title == "Google"
+      then: "you are redirected to the borderlands age verification page"
+      driver.title == "Borderlands - Age Verification"
+
+      when: "you enter a valid date of birth and click the submit button"
+      WebElement birthMonthElement = driver.findElement(By.name('birthmonth:'))
+      Select birthMonthComboBox = new Select(birthMonthElement)
+      birthMonthComboBox.selectByVisibleText('Jan')
+
+      WebElement birthDayElement = driver.findElement(By.name('birthday'))
+      Select birthDayComboBox = new Select(birthDayElement)
+      birthDayComboBox.selectByVisibleText('01')
+
+      WebElement birthYearElement = driver.findElement(By.name('birthyear'))
+      Select birthYearComboBox = new Select(birthYearElement)
+      birthYearComboBox.selectByVisibleText('1970')
+
+      WebElement submitButton = driver.findElement(By.name('Submit'))
+      submitButton.click()
+
+      then: "you are redirected to the borderlands home page"
+      WebDriverWait wait = new WebDriverWait(driver, 10)
+      wait.until(ExpectedConditions.titleIs("Borderlands - Home Page"))
    }
 
-//   def "should be able to reach the borderlands website by completing the age verification"() {
-//      given: "you are at the age verification page"
-//
-//      when: "you enter a valid date of birth and click the submit button"
-//
-//      then: "you are redirected to the borderlands home page"
-//   }
-//
 //   def "should be able to navigate to the borderlands 2 game page"() {
 //      given: "you are at the borderlands home page"
 //
