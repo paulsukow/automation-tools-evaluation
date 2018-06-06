@@ -1,13 +1,8 @@
 package seleniumwebdriver.tests
 
-import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.interactions.Actions
-import org.openqa.selenium.support.ui.ExpectedConditions
-import org.openqa.selenium.support.ui.WebDriverWait
-import seleniumwebdriver.tests.component.library.AgeVerificationPage
+import seleniumwebdriver.tests.component.library.*
 import spock.lang.Specification
 import spock.lang.Stepwise
 
@@ -35,13 +30,12 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
    }
 
    def "should be able to reach the borderlands website by completing the age verification"() {
-//      given: "you are at the age verification page"
       when: "you got to the borderlands website"
       driver.get("https://borderlandsthegame.com")
 
       then: "you are redirected to the borderlands age verification page"
       AgeVerificationPage ageVerificationPage = new AgeVerificationPage(driver)
-      driver.title == ageVerificationPage.getPageTitle()
+      ageVerificationPage.isOpen()
 
       when: "you enter a valid date of birth and click the submit button"
       ageVerificationPage.selectBirthMonth('Jan')
@@ -50,71 +44,55 @@ class SampleBorderlandsUserJourneyWithSeleniumWebdriver extends Specification {
       ageVerificationPage.submit()
 
       then: "you are redirected to the borderlands home page"
-      WebDriverWait wait = new WebDriverWait(driver, 10)
-      wait.until(ExpectedConditions.titleIs("Borderlands - Home Page"))
+      BorderlandsHomePage borderlandsHomePage = new BorderlandsHomePage(driver)
+      borderlandsHomePage.isOpen()
    }
 
    def "should be able to navigate to the borderlands 2 game page"() {
-//      given: "you are at the borderlands home page"
+      given: "you are at the borderlands home page"
+      BorderlandsHomePage borderlandsHomePage = new BorderlandsHomePage(driver)
 
       when: "you select the borderlands 2 game from the games menu"
-      WebElement gamesMenuOption = driver.findElement(By.linkText("GAMES"))
-      Actions actions = new Actions(driver)
-      actions.moveToElement(gamesMenuOption).build().perform()
-
+      borderlandsHomePage.openGamesDropDown()
       sleep(5000)
-
-      WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
-      borderlands2SubMenuOption.click()
+      borderlandsHomePage.borderlands2SubMenuOption().click()
 
       then: "you are redirected to the borderlands 2 game page"
-      WebDriverWait wait = new WebDriverWait(driver, 10)
-      wait.until(ExpectedConditions.titleIs("Borderlands - Borderlands 2"))
+      Borderlands2GamePage borderlands2GamePage = new Borderlands2GamePage(driver)
+      borderlands2GamePage.isOpen()
    }
 
    def "should be able to reach the buy borderlands 2 page"() {
-//      given: "you are at the borderlands 2 game page"
+      given: "you are at the borderlands 2 game page"
+      Borderlands2GamePage borderlands2GamePage = new Borderlands2GamePage(driver)
+      sleep(5000)
 
       when: "you click on the buy now button"
+      borderlands2GamePage.openBuyNowDropDown()
       sleep(5000)
 
-      WebElement buyNowMenuOption = driver.findElement(By.cssSelector("li.hasdrop .buy-text"))
-      Actions actions = new Actions(driver)
-      actions.moveToElement(buyNowMenuOption).build().perform()
-
-      sleep(5000)
-
-      WebElement borderlands2SubMenuOption = driver.findElement(By.linkText("BORDERLANDS 2"))
-      borderlands2SubMenuOption.click()
+      borderlands2GamePage.borderlands2SubMenuOption().click()
 
       then: "you are redirected to the buy borderlands 2 page"
-      WebDriverWait wait = new WebDriverWait(driver, 10)
-      wait.until(ExpectedConditions.titleIs("Borderlands - Buy Borderlands 2"))
+      BuyBorderlands2Page buyBorderlands2Page = new BuyBorderlands2Page(driver)
+      buyBorderlands2Page.isOpen()
    }
 
    def "should be able to select platform and reach the best buy website to buy borderlands 2"() {
-//      given: "you are at the buy borderlands 2 page"
+      given: "you are at the buy borderlands 2 page"
+      BuyBorderlands2Page buyBorderlands2Page = new BuyBorderlands2Page(driver)
 
       when: "you choose mac as the platform"
-      WebElement choosePlatform = driver.findElement(By.cssSelector('#borderlands-2 #borderlands-2 div.platform'))
-      choosePlatform.click()
-
-
-      WebElement macOption = driver.findElement(By.cssSelector("[style='display: block;'] #mac"))
-      macOption.click()
+      buyBorderlands2Page.selectPlatformAsMac()
 
       and: "you chose best buy as the retailer"
       sleep(5000)
-      WebElement chooseRetailer = driver.findElement(By.cssSelector(".retailer"))
-      chooseRetailer.click()
-
-      WebElement bestBuyOption = driver.findElement(By.xpath("//p[contains(text(), 'Best Buy')]"))
-      bestBuyOption.click()
+      buyBorderlands2Page.selectRetailerAsBestBuy()
 
       then: "a new tab opens to buy the game at best buy"
       driver.switchTo().window(driver.windowHandles.last())
-      WebDriverWait wait = new WebDriverWait(driver, 10)
-      wait.until(ExpectedConditions.titleIs('Borderlands 2 - Mac - Best Buy'))
+      Borderlands2BestBuyPage borderlands2BestBuyPage = new Borderlands2BestBuyPage(driver)
+      borderlands2BestBuyPage.isOpen()
    }
 
    def cleanupSpec() {

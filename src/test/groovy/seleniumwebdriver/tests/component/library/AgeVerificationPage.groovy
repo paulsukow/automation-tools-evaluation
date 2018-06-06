@@ -7,16 +7,16 @@ import org.openqa.selenium.support.ui.Select
 
 class AgeVerificationPage {
 
-   private WebDriver driver
+   private static final String AGE_VERIFICATION_PAGE_TITLE = "Borderlands - Age Verification"
 
-   private static final String PAGE_TITLE = "Borderlands - Age Verification"
+   private WebDriver driver
 
    public AgeVerificationPage(WebDriver driver) {
       this.driver = driver
    }
 
    public boolean isOpen() {
-      return  driver.getTitle() == PAGE_TITLE
+      return driver.getTitle() == AGE_VERIFICATION_PAGE_TITLE
    }
 
    public void selectBirthMonth(String month) {
