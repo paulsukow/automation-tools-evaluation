@@ -7,39 +7,51 @@ import org.openqa.selenium.support.ui.Select
 
 class AgeVerificationPage {
 
-   private String pageTitle = "Borderlands - Age Verification"
-
    private WebDriver driver
+
+   private static final String PAGE_TITLE = "Borderlands - Age Verification"
 
    public AgeVerificationPage(WebDriver driver) {
       this.driver = driver
    }
 
-   public String getPageTitle() {
-      return pageTitle
+   public boolean isOpen() {
+      return  driver.getTitle() == PAGE_TITLE
    }
 
    public void selectBirthMonth(String month) {
+      birthMonthComboBox().selectByVisibleText(month)
+   }
+
+   private Select birthMonthComboBox() {
       WebElement birthMonthElement = driver.findElement(By.name('birthmonth:'))
-      Select birthMonthComboBox = new Select(birthMonthElement)
-      birthMonthComboBox.selectByVisibleText(month)
+      return new Select(birthMonthElement)
    }
 
    public void selectBirthDay(String day) {
+      birthdayComboBox().selectByVisibleText(day)
+   }
+
+   private Select birthdayComboBox() {
       WebElement birthDayElement = driver.findElement(By.name('birthday'))
-      Select birthDayComboBox = new Select(birthDayElement)
-      birthDayComboBox.selectByVisibleText(day)
+      return new Select(birthDayElement)
    }
 
    public void selectBirthYear(String year) {
+      birthYearComboBox().selectByVisibleText(year)
+   }
+
+   private Select birthYearComboBox() {
       WebElement birthYearElement = driver.findElement(By.name('birthyear'))
-      Select birthYearComboBox = new Select(birthYearElement)
-      birthYearComboBox.selectByVisibleText(year)
+      return new Select(birthYearElement)
    }
 
    public void submit() {
-      WebElement submitButton = driver.findElement(By.name('Submit'))
-      submitButton.click()
+      submitButton().click()
+   }
+
+   private WebElement submitButton() {
+      driver.findElement(By.name('Submit'))
    }
 
 }
